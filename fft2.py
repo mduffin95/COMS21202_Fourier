@@ -6,7 +6,7 @@ from skimage import io
 import matplotlib.pyplot as plt
 # %matplotlib inline
 
-f = io.imread('characters/V5.GIF')   # read in image
+f = io.imread('V.GIF')   # read in image
 f_f = np.array(f, dtype=float)
 z = np.fft.fft2(f_f)           # do fourier transform
 q = np.fft.fftshift(z)         # puts u=0,v=0 in the centre
