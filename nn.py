@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import glob, re, math
 from sklearn.neighbors import KNeighborsClassifier
 from matplotlib.colors import ListedColormap
+from features import generate_cross
 
 s = re.compile("characters/S\d+.GIF")
 t = re.compile("characters/T\d+.GIF")
@@ -22,29 +23,16 @@ def get_features(path):
     q = np.fft.fftshift(z)         # puts u=0,v=0 in the centre
     Magq =  np.absolute(q)         # magnitude spectrum
 
-    r = 20
-    sectors = np.zeros([4], dtype=float)
-    height = Magq.shape[0]
-    width = Magq.shape[1]
-    for (y, x), element in np.ndenumerate(Magq):
-        v = height/2 - y
-        u = (- width / 2) + x
-        theta = np.arctan2( v, u )
-        if math.sqrt( v ** 2 + u ** 2 ) <= r and v>=0:
-            if v==0 and u==0:
-                continue
-            segs = 12
-            i = segs*theta / math.pi % segs
-            if(i < 1 or i >=11):
-                j = 0
-            elif(i < 5 and i >= 1):
-                j = 1
-            elif(i < 7 and i >= 5):
-                j = 2
-            else:
-                j = 3
-            sectors[j] += element ** 2
-    return sectors
+    mask1 = generate_cross(30, 5, 0)
+    mask2 = generate_cross(50, 5, 45)
+
+    A = np.multiply( Magq, mask1 )
+    B = np.multiply( Magq, mask2 )
+
+    A = np.power( A, 2 )
+    B = np.power( B, 2 )
+
+    return np.array([np.sum(A), np.sum(B)])
 
 
 def plot_boundaries(X, X_target, T, T_target, n_neighbors):
@@ -58,7 +46,7 @@ def plot_boundaries(X, X_target, T, T_target, n_neighbors):
     cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA', '#AAAAFF'])
     cmap_bold = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
 
-    g = h*100
+    g = 1000000000
     x_min, x_max = T[:, 0].min() - g, T[:, 0].max() + g
     y_min, y_max = T[:, 1].min() - g, T[:, 1].max() + g
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
@@ -82,7 +70,7 @@ def plot_boundaries(X, X_target, T, T_target, n_neighbors):
     plt.show()
 
 def get_all_features(paths):
-    X = np.empty((0,4), dtype=float)
+    X = np.empty((0,2), dtype=float)
     for i, p in enumerate(paths):
         result = get_features(p)
         X = np.vstack((X, result))
@@ -113,5 +101,5 @@ if __name__=="__main__":
         np.save(ysave, y)
 
     n=3
-    X = X[:, [3,2]]
+    # X = X[:, [3,2]]
     plot_boundaries(X, y, X, y, n)
