@@ -3,8 +3,9 @@ from skimage import io
 import matplotlib.pyplot as plt
 import glob, re, math
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import normalize
 from matplotlib.colors import ListedColormap
-from features import generate_cross
+from features import *
 
 s = re.compile("characters/S\d+.GIF")
 t = re.compile("characters/T\d+.GIF")
@@ -17,22 +18,39 @@ ysave = "target.npy"
 # Store its features, along with its class.
 
 def get_features(path):
+    print(path)
+    fnum = 5
     f = io.imread(path)
     f_f = np.array(f, dtype=float)
     z = np.fft.fft2(f_f)           # do fourier transform
     q = np.fft.fftshift(z)         # puts u=0,v=0 in the centre
-    Magq =  np.absolute(q)         # magnitude spectrum
+    Magq =  np.log( np.absolute(q) + 1 )         # magnitude spectrum
 
-    mask1 = generate_cross(30, 5, 0)
-    mask2 = generate_cross(50, 5, 45)
+    masks = np.empty((fnum, 400, 640), dtype=float)
+    masks[0] = cross(50, 5, 0)
+    masks[1] = line(5, 100, 0)
+    a = line(5, 50, 23)
+    b = line(5, 50, -23)
+    masks[2] = np.logical_or(a, b).astype(np.uint8)
+    masks[3] = triangle()
+    masks[4] = ring(60, 10)
+    # print(np.sum(mask3), np.sum(mask1))
 
-    A = np.multiply( Magq, mask1 )
-    B = np.multiply( Magq, mask2 )
+    res = np.empty(fnum, dtype=float)
+    for i in range(fnum):
+        # print(masks[i].shape)
+        masks[i] = np.multiply( Magq, masks[i] )
+        masks[i] = np.power( masks[i], 2 )
 
-    A = np.power( A, 2 )
-    B = np.power( B, 2 )
+        # plt.figure()
+        # plt.imshow(masks[i], cmap="Greys") #masks[i, 100:300, 220:420]
+        # plt.show()
 
-    return np.array([np.sum(A), np.sum(B)])
+        res[i] = np.sum( masks[i] )
+        # print( res[i] )
+
+    # print(res)
+    return res
 
 
 def plot_boundaries(X, X_target, T, T_target, n_neighbors):
@@ -40,37 +58,37 @@ def plot_boundaries(X, X_target, T, T_target, n_neighbors):
 
     clf = KNeighborsClassifier(n_neighbors=n_neighbors)
     clf.fit(X, X_target)
-    h = 10000000000  # step size in the mesh
-
-    # Create color maps
+    h = 0.001  # step size in the mesh
+    #
+    # # Create color maps
     cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA', '#AAAAFF'])
     cmap_bold = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
-
-    g = 1000000000
+    #
+    g = 0.1
     x_min, x_max = T[:, 0].min() - g, T[:, 0].max() + g
     y_min, y_max = T[:, 1].min() - g, T[:, 1].max() + g
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-
-    # Put the result into a color plot
+    #
+    # # Put the result into a color plot
     Z = Z.reshape(xx.shape)
     plt.figure()
     plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
-
-    # Plot also the test points
+    #
+    # # Plot also the test points
     plt.scatter(T[:, 0], T[:, 1], c=T_target, cmap=cmap_bold)
-
+    #
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
     plt.title("3-Class classification (k = %i)"
               % (n_neighbors, ))
-    # plt.colorbar()
-
+    plt.colorbar()
+    #
     plt.show()
 
 def get_all_features(paths):
-    X = np.empty((0,2), dtype=float)
+    X = np.empty((0,5), dtype=float)
     for i, p in enumerate(paths):
         result = get_features(p)
         X = np.vstack((X, result))
@@ -101,5 +119,7 @@ if __name__=="__main__":
         np.save(ysave, y)
 
     n=3
-    # X = X[:, [3,2]]
-    plot_boundaries(X, y, X, y, n)
+    X = X[:, [0,2]]
+    X_normed = X / X.max(axis=0)
+    print(X_normed)
+    plot_boundaries(X_normed, y, X_normed, y, n)
