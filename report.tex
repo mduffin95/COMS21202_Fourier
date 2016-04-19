@@ -9,8 +9,10 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{subfig}
+%\usepackage{subfig}
 \usepackage{titling}
+
+\usepackage{subcaption}
 
 \setlength{\droptitle}{-60pt}
 
@@ -24,69 +26,125 @@
 \maketitle
 
 \section{Introduction}
-This report describes the steps involved in processing a set of training data with the ultimate goal of creating an accurate classifier. We created two different classifiers using two different techniques. By doing this we gained experience with clustering and classifying data. 
-
-We were provided with two sets of data points. The first contained 150 data points, each with 5 different features. We were not provided with the number of classes that this data had been drawn from. We were also provided with 15 separate data points. These were used to test our classifiers. 
+This report describes the process of desiging a classifier for a set of characters. By extracting features from the fourier space images of these three types of character (S, T and V) I have been able to build a reasonably accurate classifier. 
 
 \section{Feature Selection}
-Figures ~\ref{fig:feature_matrix} and ~\ref{fig:features_nick} were provided in order to assist us with identifying which two features separate the clusters.
+The first step in the process is to find the features that clearly separate the three types of character. We were asked in this task to extract features from the fourier space. As a starting point I created the fourier space images for each of the characters and then took the average of each class. The results of this are shown below. 
 
 \begin{figure}[ht]
+\centering
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{characters/S_average.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{characters/T_average.png}
+	\end{minipage}
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{characters/V_average.png}
+	\end{minipage}
+	\caption{Average fourier spaces of S (left) T (centre) and V (right).}
+	\label{fig:averages}
+\end{figure}
+
+You can see that the fourier space for the letter T has very strong spectral peaks in the horizontal and vertical directions. The vertical line tells us that in the original image there is a high rate of change of intensity in the horizontal direction. The horizontal line shows the same for the vertical direction. Looking at the letter T you can indeed see that the two lines that make it up correspond to the strong bright vertical and horizontal lines in the fourier space. 
+
+At this point I looked at the three images and tried to find regions where the intensity differed. For example, the strong horizontal and vertical lines that are present in the T fourier space are not present in the others. Likewise, the diagonal lines in V's fourier space are not present in the others. Using this information I selected five different regions to take forward and test, which can be seen in Figure ~\ref{fig:features}.
+
+\begin{figure}[ht]
+\centering
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{features/cross.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{features/line.png}
+	\end{minipage}
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{features/x.png}
+	\end{minipage}
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{features/triangle.png}
+	\end{minipage}
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[trim={2cm 2cm 2cm 2cm},clip,width=0.8\textwidth]{features/ring.png}
+	\end{minipage}
+	\caption{Features selected to take forward to testing.}
+	\label{fig:features}
+\end{figure}
+You will notice that a lot of the features have a "hole" in the middle. This is because I wanted to exclude the DC component from the features. The DC component is the average brightness of the image. It does not give any information about direction. Therefore its inclusion would be likely to skew my results if a certain image were brigher than the others. 
+\begin{figure}[ht]
 	\centering
-	\includegraphics[trim={0 1cm 3cm 1cm},clip,width=0.8\textwidth]{feature_matrix_leg.png}
+	\includegraphics[trim={0 1.5cm 3cm 1.5cm},clip,width=0.75\textwidth]{feature_matrix_leg.png}
 	\caption{A grid of plots, each of which plots one feature against another.}
 	\label{fig:feature_matrix}
 \end{figure}
 
-It is immediately obvious that features 2 and 3 on the left, and 2 and 5 on the right, separate the data into three well defined clusters. We then extracted these features and examined them in more detail. You can see the two features plotted against each other in Figures ~\ref{fig:clusters_matt} and ~\ref{fig:clusters_nick}. The inter-cluster distance is high so there is a clear separation between clusters. The intra-cluster distances are low though so the underlying gaussian distributions for each cluster have low variance. 
+Next, I took the log of the magnitude spectrum, squared it to get the power and then summed up the region defined by the feature.
 
-\section{Class Identification}
-During this stage we wanted to derive class labels for each data point. The first method  we used was the K-Means algorithm. At first we ran the algorithm until convergence to ensure that we did not recieve unusual results due to the random nature of initial centroid selection. As you can see from the graph, this worked very well, visually matching our expectations. The K-Means algorithm also returns the inertia. This is the sum of distances of data points to their closest centroid. For Nick's data the value is 163. Given there are 150 data points this means each point is on average roughly 1 unit from the closest centroid, which seems very good. 
+In Figure ~\ref{fig:feature_matrix} I have plotted the features against each other to form a grid of plots. The features are numbered 0 to 4 downwards and 0 to 4 from left to right. There are a number of good candidates, such as (0,2) and (2,4) but I decided to take (0,4) forwards (the cross and the ring) because apart from one wayward point it separates the data into three well defined clusters. A more detailed plot of these two features can be seen in Figure ~\ref{fig:classifier_training}.
+
+
+
+% The inter-cluster distance is high so there is a clear separation between clusters. The intra-cluster distances are low though so the underlying gaussian distributions for each cluster have low variance. 
+
+\section{The Classifier}
+\subsection{Training The Classifier}
+
+\begin{figure}
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{training_plot_k1.png}
+\subcaption{K=1}\label{fig:1a}
+\end{minipage}%
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{training_plot_k2.png}
+\subcaption{K=2}\label{fig:1a}
+\end{minipage}
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{training_plot_k3.png}
+\subcaption{K=3}\label{fig:1b}
+\end{minipage}%
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\includegraphics[width=1\textwidth]{training_plot_k4.png}
+\subcaption{K=4}\label{fig:1b}
+\end{minipage}
+\caption{K-Nearest Neighbour Classifiers with K=1..4}\label{fig:1}
+\end{figure}
 
 %\begin{figure}[ht]
 %\centering
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={7cm 0 2cm 0},clip,width=1.1\textwidth]{clusters_matt.pdf}
-%	\caption{Matt's data.}
-%	\label{fig:clusters_matt}
-%\end{minipage}
-%%\quad
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={7cm 0 2cm 0},clip,width=1.1\textwidth]{clusters_nick.pdf}
-%	\caption{Nick's data.}
-%	\label{fig:clusters_nick}
-%\end{minipage}
+%\begin{subfigure}[K=2]{%
+%	\includegraphics[]{training_plot_k2.png}
+%	\label{fig:train_k2}}
+%\quad
+%\begin{subfigure}[K=3]{%
+%	\includegraphics[]{training_plot_k2.png}
+%	\label{fig:train_k3}}
+%\quad
+%\begin{subfigure}[K=4]{%
+%	\includegraphics[]{training_plot_k2.png}
+%	\label{fig:train_k4}}
+%%
+%\caption{The K-Nearest Neighbour classifier with K=2. The training data has also been plotted.}
+%\label{fig:training_plots}
 %\end{figure}
 
-% PUT ACTUAL NUMBERS IN ABOVE TEXT
+Figure ~\ref{fig:classifier_training} shows that the selection of features 0 and 4 was a good one. The K-Nearest Neighbours algorithm has produced a fairly well-defined decision boundary. Only one point sits right on the decision boundary between S and V. This is fine, as it shows we are avoiding over-fitting the model to the test data.
 
-% GRAPH HERE
+I must also mention that the values supplied to the K-Nearest Neighbour  algorithm were normalised first by dividing each feature by the largest value. This had no effect on the classification but just made the scale easier to interpret.
 
-\subsection{K-Means Experimentation}
-The K-Means algorithm has a number of potential flaws. In this part of the coursework we aimed to expose these flaws. K-Means is a heuristic algorithm that finds a local optimum of centroid positions. Therefore there is no guarantee that it will converge to the global optimum \cite{km_wiki}.
+%During this stage we wanted to derive class labels for each data point. The first method  we used was the K-Means algorithm. At first we ran the algorithm until convergence to ensure that we did not recieve unusual results due to the random nature of initial centroid selection. As you can see from the graph, this worked very well, visually matching our expectations. The K-Means algorithm also returns the inertia. This is the sum of distances of data points to their closest centroid. For Nick's data the value is 163. Given there are 150 data points this means each point is on average roughly 1 unit from the closest centroid, which seems very good. 
 
-%\begin{algorithm}[H]
-%
-%  \caption{The K-Means algorithm.}
-%  \SetKwFunction{algo}{K-Means}
-%  \SetKwProg{myalg}{def}{}{}
-%  \myalg{\algo{Instances, K}}{
-%  randomly initialise vectors $\mu_0$ .. $\mu_K$
-%  
-%  \Repeat{no change in $\mu_0$ .. $\mu_K$}{
-%  	assign each x $\epsilon$ Instances to nearest $\mu$
-%  	
-%  	re-calculate each $\mu$ as average of points assigned to it
-%  	}
-%  \Return{$\mu_0$ .. $\mu_K$}
-%  }
-%\end{algorithm}
-Firstly, the algorithm can be given poor choices of initial centroids. You should be able to place two of the initial centroids within one of the clusters so that K-Means splits that cluster in two. The last centroid is then placed between the remaining two clusters so that K-Means treats them as one large cluster. Unfortunately though we were unable to find a configuration where K-Means converged to a non-optimal clustering. 
+\subsection{Testing The Classifier}
 
-Next we changed the number of iterations that K-Means went through. The aim here was to cut the algorithm off before it converged. We switched back to random initialisation of centroids and reduced the maximum number of iterations until we saw non-optimal clustering. We found that it was necessary to go all the way down to one or two iterations before non-optimal clustering occurred. This shows that K-Means converges very quickly on these data sets. 
-
-One last way to affect the clustering is to change the distance measure that K-Means uses. Unfortunately we could find no way to do this with the library function that we were using so we couldn't test this option. The algorithm currently uses the Euclidean distance which produces reliable results. If we had managed to change it to the Manhattan distance we may have seen non-optimal clustering.
-% GRAPH HERE
+\begin{figure}[ht]
+	\centering
+	\includegraphics[trim={0 0 0 1cm},clip,width=0.75\textwidth]{test_plot.png}
+	\caption{The K-Nearest Neighbour classifier with K=3. The test data has also been plotted.}
+	\label{fig:classifier_test}
+\end{figure}
 
 \section{Nearest-Centroid Classification}
 The next stage of our analysis was to start classifying new data. We started by using the centroids that we found using K-Means as a simple nearest-neighbour classifier. You can see the results in Figures ~\ref{fig:nearest_matt} and ~\ref{fig:nearest_nick}. The crosses represent the test data. As our features had high inter-cluster distance the nearest neighbour produced a fairly good assignment of data points. However, we could not test that it was getting the right result every time as we did not know which cluster each test point was \textit{supposed} to belong to.

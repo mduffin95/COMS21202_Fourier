@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.11.22)  19 APR 2016 00:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.11.22)  19 APR 2016 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -149,8 +149,14 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen117
 \Gin@req@width=\dimen118
 )
-(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
-Package: subfig 2005/06/28 ver: 1.3 subfig package
+(/usr/share/texlive/texmf-dist/tex/latex/titling/titling.sty
+Package: titling 2009/09/04 v2.1d maketitle typesetting
+\thanksmarkwidth=\skip70
+\thanksmargin=\skip71
+\droptitle=\skip72
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
@@ -168,40 +174,36 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 )
 \c@ContinuedFloat=\count95
 )
-\c@KVtest=\count96
-\sf@farskip=\skip70
-\sf@captopadj=\dimen126
-\sf@capskip=\skip71
-\sf@nearskip=\skip72
-\c@subfigure=\count97
-\c@subfigure@save=\count98
-\c@lofdepth=\count99
-\c@subtable=\count100
-\c@subtable@save=\count101
-\c@lotdepth=\count102
-\sf@top=\skip73
-\sf@bottom=\skip74
+\c@subfigure=\count96
+\c@subtable=\count97
+) (./report.aux
+
+LaTeX Warning: Label `fig:1a' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:1a' multiply defined.
+
+
+LaTeX Warning: Label `fig:1b' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:1b' multiply defined.
+
 )
-(/usr/share/texlive/texmf-dist/tex/latex/titling/titling.sty
-Package: titling 2009/09/04 v2.1d maketitle typesetting
-\thanksmarkwidth=\skip75
-\thanksmargin=\skip76
-\droptitle=\skip77
-) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -239,16 +241,16 @@ LaTeX Font Info:    ... okay on input line 23.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count103
-\scratchdimen=\dimen127
+\scratchcounter=\count98
+\scratchdimen=\dimen126
 \scratchbox=\box34
-\nofMPsegments=\count104
-\nofMParguments=\count105
+\nofMPsegments=\count99
+\nofMParguments=\count100
 \everyMPshowfont=\toks16
-\MPscratchCnt=\count106
-\MPscratchDim=\dimen128
-\MPnumerator=\count107
-\makeMPintoPDFobject=\count108
+\MPscratchCnt=\count101
+\MPscratchDim=\dimen127
+\MPnumerator=\count102
+\makeMPintoPDFobject=\count103
 \everyMPtoPDFconversion=\toks17
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -295,53 +297,121 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 24.
+(Font)              <12> on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 24.
+(Font)              <8> on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 24.
+(Font)              <6> on input line 26.
 
+<characters/S_average.png, id=1, 578.16pt x 433.62pt>
+File: characters/S_average.png Graphic file (type png)
 
-LaTeX Warning: Reference `fig:features_nick' on page 1 undefined on input line 
-32.
+<use characters/S_average.png>
+Package pdftex.def Info: characters/S_average.png used on input line 37.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
 
-<feature_matrix_leg.png, id=1, 722.7pt x 433.62pt>
+<characters/T_average.png, id=4, 578.16pt x 433.62pt>
+File: characters/T_average.png Graphic file (type png)
+
+<use characters/T_average.png>
+Package pdftex.def Info: characters/T_average.png used on input line 40.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+
+<characters/V_average.png, id=6, 578.16pt x 433.62pt>
+File: characters/V_average.png Graphic file (type png)
+
+<use characters/V_average.png>
+Package pdftex.def Info: characters/V_average.png used on input line 43.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+ <features/cross.png, id=8, 578.16pt x 433.62pt>
+File: features/cross.png Graphic file (type png)
+
+<use features/cross.png>
+Package pdftex.def Info: features/cross.png used on input line 56.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+ <features/line.png, id=10, 578.16pt x 433.62pt>
+File: features/line.png Graphic file (type png)
+
+<use features/line.png>
+Package pdftex.def Info: features/line.png used on input line 59.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+ <features/x.png, id=12, 578.16pt x 433.62pt>
+File: features/x.png Graphic file (type png)
+
+<use features/x.png>
+Package pdftex.def Info: features/x.png used on input line 62.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+ <features/triangle.png, id=14, 578.16pt x 433.62pt>
+File: features/triangle.png Graphic file (type png)
+
+<use features/triangle.png>
+Package pdftex.def Info: features/triangle.png used on input line 65.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+ <features/ring.png, id=16, 578.16pt x 433.62pt>
+File: features/ring.png Graphic file (type png)
+
+<use features/ring.png>
+Package pdftex.def Info: features/ring.png used on input line 68.
+(pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
+ <feature_matrix_leg.png, id=18, 722.7pt x 433.62pt>
 File: feature_matrix_leg.png Graphic file (type png)
 
 <use feature_matrix_leg.png>
-Package pdftex.def Info: feature_matrix_leg.png used on input line 36.
-(pdftex.def)             Requested size: 386.95897pt x 228.72635pt.
+Package pdftex.def Info: feature_matrix_leg.png used on input line 76.
+(pdftex.def)             Requested size: 362.77264pt x 198.23494pt.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./characters/S_average.png
+> <./characters/T_average.png> <./characters/V_average.png> <./features/cross.p
+ng> <./features/line.png> <./features/x.png> <./features/triangle.png> <./featu
+res/ring.png>]
+
+LaTeX Warning: Reference `fig:classifier_training' on page 2 undefined on input
+ line 83.
+
+<training_plot_k1.png, id=45, 578.16pt x 433.62pt>
+File: training_plot_k1.png Graphic file (type png)
+ <use training_plot_k1.png>
+Package pdftex.def Info: training_plot_k1.png used on input line 95.
+(pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
+
+<training_plot_k2.png, id=46, 578.16pt x 433.62pt>
+File: training_plot_k2.png Graphic file (type png)
+ <use training_plot_k2.png>
+Package pdftex.def Info: training_plot_k2.png used on input line 100.
+(pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
+
+<training_plot_k3.png, id=47, 578.16pt x 433.62pt>
+File: training_plot_k3.png Graphic file (type png)
+ <use training_plot_k3.png>
+Package pdftex.def Info: training_plot_k3.png used on input line 105.
+(pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
+
+<training_plot_k4.png, id=48, 578.16pt x 433.62pt>
+File: training_plot_k4.png Graphic file (type png)
+ <use training_plot_k4.png>
+Package pdftex.def Info: training_plot_k4.png used on input line 110.
+(pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
 
 
-LaTeX Warning: Reference `fig:clusters_matt' on page 1 undefined on input line 
-41.
+LaTeX Warning: Reference `fig:classifier_training' on page 2 undefined on input
+ line 134.
+
+<test_plot.png, id=49, 578.16pt x 433.62pt>
+File: test_plot.png Graphic file (type png)
+ <use test_plot.png>
+Package pdftex.def Info: test_plot.png used on input line 144.
+(pdftex.def)             Requested size: 362.77264pt x 254.22426pt.
 
 
-LaTeX Warning: Reference `fig:clusters_nick' on page 1 undefined on input line 
-41.
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./feature_matrix_leg.png>]
+LaTeX Warning: Reference `fig:nearest_matt' on page 2 undefined on input line 1
+50.
 
 
-LaTeX Warning: Reference `fig:nearest_matt' on page 2 undefined on input line 9
-2.
-
-
-LaTeX Warning: Reference `fig:nearest_nick' on page 2 undefined on input line 9
-2.
-
-
-LaTeX Warning: Reference `fig:prior_matt' on page 2 undefined on input line 154
-.
-
-
-LaTeX Warning: Reference `fig:prior_nick' on page 2 undefined on input line 154
-.
+LaTeX Warning: Reference `fig:nearest_nick' on page 2 undefined on input line 1
+50.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -349,9 +419,22 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2] [3] (./report.aux)
+[2 <./feature_matrix_leg.png>] [3 <./training_plot_k1.png> <./training_plot_k2.
+png> <./training_plot_k3.png> <./training_plot_k4.png>]
+
+LaTeX Warning: Reference `fig:prior_matt' on page 4 undefined on input line 212
+.
+
+
+LaTeX Warning: Reference `fig:prior_nick' on page 4 undefined on input line 212
+.
+
+[4 <./test_plot.png>] [5] (./report.aux)
 
 LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
 
  )
 (\end occurred inside a group at level 1)
@@ -359,23 +442,23 @@ LaTeX Warning: There were undefined references.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 4328 strings out of 494977
- 67354 string characters out of 6180182
- 146102 words of memory out of 5000000
- 7516 multiletter control sequences out of 15000+600000
+ 4308 strings out of 494977
+ 67393 string characters out of 6180182
+ 142170 words of memory out of 5000000
+ 7484 multiletter control sequences out of 15000+600000
  8541 words of font info for 30 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 44i,10n,43p,668b,3876s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,10n,43p,669b,3943s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (3 pages, 154789 bytes).
+Output written on report.pdf (5 pages, 852109 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
- 28 compressed objects within 1 object stream
+ 93 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 12 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 131 words of extra memory for PDF output out of 10000 (max. 10000000)
 

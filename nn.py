@@ -80,11 +80,14 @@ def plot_boundaries(X, X_target, T, T_target, n_neighbors):
     #
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
-    plt.title("3-Class classification (k = %i)"
-              % (n_neighbors, ))
-    plt.colorbar()
+    # plt.title("3-Class classification (k = %i)"
+    #           % (n_neighbors, ))
+    plt.xlabel("Feature 0 (Cross)", fontsize=18)
+    plt.ylabel("Feature 4 (Ring)", fontsize=18)
+    # plt.colorbar()
     #
     plt.show()
+    # plt.savefig("test_plot.png")
 
 def get_all_features(paths):
     X = np.empty((0,5), dtype=float)
@@ -143,10 +146,10 @@ if __name__=="__main__":
     T_normed = T_normed[:, [0,4]]
     T_targets = get_targets(paths)
 
-    n=3
+    n=1
     X_normed = X / X.max(axis=0)
     # plotmatrix( X_normed, y )
     X_normed = X_normed[:, [0,4]]
 
     # print(X_normed)
-    plot_boundaries(X_normed, X_targets, T_normed, T_targets, n)
+    plot_boundaries(X_normed, X_targets, X_normed, X_targets, n)
