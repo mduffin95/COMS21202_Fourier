@@ -43,7 +43,7 @@ def get_features(path):
     for i in range(fnum):
         # print(masks[i].shape)
         masks[i] = np.multiply( Magq, masks[i] )
-        masks[i] = np.power( masks[i], 2 )
+        # masks[i] = np.power( masks[i], 2 )
 
         # plt.figure()
         # plt.imshow(masks[i], cmap="Greys") #masks[i, 100:300, 220:420]
@@ -84,6 +84,7 @@ def plot_boundaries(X, X_target, T, T_target, n_neighbors):
     #           % (n_neighbors, ))
     plt.xlabel("Feature 0 (Cross)", fontsize=18)
     plt.ylabel("Feature 4 (Ring)", fontsize=18)
+
     # plt.colorbar()
     #
     plt.show()
@@ -140,16 +141,20 @@ if __name__=="__main__":
         X_targets = get_targets(paths)
         np.save(ysave, X_targets)
 
-    paths = glob.glob('test/*.GIF')
+
+    n=4
+    X_normed = X / X.max(axis=0)
+    # plotmatrix( X_normed, X_targets )
+    X_normed = X_normed[:, [0,4]]
+
+    # paths = glob.glob('test/*.GIF')
+    paths = ["characters/ab/A1.GIF", "characters/ab/B1.GIF"]
     T=get_all_features(paths)
-    T_normed = T / T.max(axis=0)
+    T_normed = T / X.max(axis=0)
     T_normed = T_normed[:, [0,4]]
     T_targets = get_targets(paths)
 
-    n=1
-    X_normed = X / X.max(axis=0)
-    # plotmatrix( X_normed, y )
-    X_normed = X_normed[:, [0,4]]
+
 
     # print(X_normed)
-    plot_boundaries(X_normed, X_targets, X_normed, X_targets, n)
+    plot_boundaries(X_normed, X_targets, T_normed, T_targets, n)

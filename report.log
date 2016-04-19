@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.11.22)  19 APR 2016 17:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.11.22)  20 APR 2016 00:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -176,20 +176,7 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 )
 \c@subfigure=\count96
 \c@subtable=\count97
-) (./report.aux
-
-LaTeX Warning: Label `fig:1a' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:1a' multiply defined.
-
-
-LaTeX Warning: Label `fig:1b' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:1b' multiply defined.
-
-)
+) (./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
@@ -204,7 +191,6 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -355,63 +341,49 @@ File: features/ring.png Graphic file (type png)
 <use features/ring.png>
 Package pdftex.def Info: features/ring.png used on input line 68.
 (pdftex.def)             Requested size: 116.08887pt x 79.95206pt.
- <feature_matrix_leg.png, id=18, 722.7pt x 433.62pt>
-File: feature_matrix_leg.png Graphic file (type png)
-
-<use feature_matrix_leg.png>
-Package pdftex.def Info: feature_matrix_leg.png used on input line 76.
-(pdftex.def)             Requested size: 362.77264pt x 198.23494pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./characters/S_average.png
 > <./characters/T_average.png> <./characters/V_average.png> <./features/cross.p
 ng> <./features/line.png> <./features/x.png> <./features/triangle.png> <./featu
 res/ring.png>]
+<feature_matrix_leg.png, id=43, 722.7pt x 433.62pt>
+File: feature_matrix_leg.png Graphic file (type png)
+
+<use feature_matrix_leg.png>
+Package pdftex.def Info: feature_matrix_leg.png used on input line 78.
+(pdftex.def)             Requested size: 362.77264pt x 198.23494pt.
+
 
 LaTeX Warning: Reference `fig:classifier_training' on page 2 undefined on input
- line 83.
+ line 85.
 
 <training_plot_k1.png, id=45, 578.16pt x 433.62pt>
 File: training_plot_k1.png Graphic file (type png)
  <use training_plot_k1.png>
-Package pdftex.def Info: training_plot_k1.png used on input line 95.
+Package pdftex.def Info: training_plot_k1.png used on input line 97.
 (pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
 
 <training_plot_k2.png, id=46, 578.16pt x 433.62pt>
 File: training_plot_k2.png Graphic file (type png)
  <use training_plot_k2.png>
-Package pdftex.def Info: training_plot_k2.png used on input line 100.
+Package pdftex.def Info: training_plot_k2.png used on input line 102.
 (pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
 
 <training_plot_k3.png, id=47, 578.16pt x 433.62pt>
 File: training_plot_k3.png Graphic file (type png)
  <use training_plot_k3.png>
-Package pdftex.def Info: training_plot_k3.png used on input line 105.
+Package pdftex.def Info: training_plot_k3.png used on input line 107.
 (pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
 
 <training_plot_k4.png, id=48, 578.16pt x 433.62pt>
 File: training_plot_k4.png Graphic file (type png)
  <use training_plot_k4.png>
-Package pdftex.def Info: training_plot_k4.png used on input line 110.
+Package pdftex.def Info: training_plot_k4.png used on input line 112.
 (pdftex.def)             Requested size: 241.84843pt x 181.38472pt.
 
 
-LaTeX Warning: Reference `fig:classifier_training' on page 2 undefined on input
- line 134.
-
-<test_plot.png, id=49, 578.16pt x 433.62pt>
-File: test_plot.png Graphic file (type png)
- <use test_plot.png>
-Package pdftex.def Info: test_plot.png used on input line 144.
-(pdftex.def)             Requested size: 362.77264pt x 254.22426pt.
-
-
-LaTeX Warning: Reference `fig:nearest_matt' on page 2 undefined on input line 1
-50.
-
-
-LaTeX Warning: Reference `fig:nearest_nick' on page 2 undefined on input line 1
-50.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -419,22 +391,99 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[2 <./feature_matrix_leg.png>] [3 <./training_plot_k1.png> <./training_plot_k2.
-png> <./training_plot_k3.png> <./training_plot_k4.png>]
+[2 <./feature_matrix_leg.png>] <test/S1.png, id=55, 642.4pt x 401.5pt>
+File: test/S1.png Graphic file (type png)
 
-LaTeX Warning: Reference `fig:prior_matt' on page 4 undefined on input line 212
-.
+<use test/S1.png>
+Package pdftex.def Info: test/S1.png used on input line 135.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+ <test/S2.png, id=56, 642.4pt x 401.5pt>
+File: test/S2.png Graphic file (type png)
+ <use test/S2.png>
+Package pdftex.def Info: test/S2.png used on input line 138.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/S3.png, id=57, 642.4pt x 401.5pt>
+File: test/S3.png Graphic file (type png)
+ <use test/S3.png>
+Package pdftex.def Info: test/S3.png used on input line 141.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/S4.png, id=58, 642.4pt x 401.5pt>
+File: test/S4.png Graphic file (type png)
+ <use test/S4.png>
+Package pdftex.def Info: test/S4.png used on input line 144.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/T1.png, id=59, 642.4pt x 401.5pt>
+File: test/T1.png Graphic file (type png)
+ <use test/T1.png>
+Package pdftex.def Info: test/T1.png used on input line 147.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/T2.png, id=60, 642.4pt x 401.5pt>
+File: test/T2.png Graphic file (type png)
+ <use test/T2.png>
+Package pdftex.def Info: test/T2.png used on input line 150.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/T3.png, id=61, 642.4pt x 401.5pt>
+File: test/T3.png Graphic file (type png)
+ <use test/T3.png>
+Package pdftex.def Info: test/T3.png used on input line 153.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/T4.png, id=62, 642.4pt x 401.5pt>
+File: test/T4.png Graphic file (type png)
+ <use test/T4.png>
+Package pdftex.def Info: test/T4.png used on input line 156.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/V1.png, id=63, 642.4pt x 401.5pt>
+File: test/V1.png Graphic file (type png)
+ <use test/V1.png>
+Package pdftex.def Info: test/V1.png used on input line 159.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/V2.png, id=64, 642.4pt x 401.5pt>
+File: test/V2.png Graphic file (type png)
+ <use test/V2.png>
+Package pdftex.def Info: test/V2.png used on input line 162.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/V3.png, id=65, 642.4pt x 401.5pt>
+File: test/V3.png Graphic file (type png)
+ <use test/V3.png>
+Package pdftex.def Info: test/V3.png used on input line 165.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test/V4.png, id=66, 642.4pt x 401.5pt>
+File: test/V4.png Graphic file (type png)
+ <use test/V4.png>
+Package pdftex.def Info: test/V4.png used on input line 168.
+(pdftex.def)             Requested size: 43.5336pt x 27.20729pt.
+
+<test_plot.png, id=67, 578.16pt x 433.62pt>
+File: test_plot.png Graphic file (type png)
+ <use test_plot.png>
+Package pdftex.def Info: test_plot.png used on input line 176.
+(pdftex.def)             Requested size: 362.77264pt x 254.22426pt.
+ [3 <./training_plot_k1.png> <./training_plot_k2.png> <./training_plot_k3.png> 
+<./training_plot_k4.png> <./test/S1.png> <./test/S2.png> <./test/S3.png> <./tes
+t/S4.png> <./test/T1.png> <./test/T2.png> <./test/T3.png> <./test/T4.png> <./te
+st/V1.png> <./test/V2.png> <./test/V3.png> <./test/V4.png>]
+<ab.png, id=76, 578.16pt x 433.62pt>
+File: ab.png Graphic file (type png)
+ <use ab.png>
+Package pdftex.def Info: ab.png used on input line 191.
+(pdftex.def)             Requested size: 362.77264pt x 254.22426pt.
 
 
-LaTeX Warning: Reference `fig:prior_nick' on page 4 undefined on input line 212
-.
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4 <./test_plot.png>] [5] (./report.aux)
+[4 <./test_plot.png>] [5 <./ab.png>] (./report.aux)
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
 
  )
 (\end occurred inside a group at level 1)
@@ -442,23 +491,22 @@ LaTeX Warning: There were multiply-defined labels.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 4308 strings out of 494977
- 67393 string characters out of 6180182
- 142170 words of memory out of 5000000
- 7484 multiletter control sequences out of 15000+600000
- 8541 words of font info for 30 fonts, out of 8000000 for 9000
+ 4368 strings out of 494977
+ 68230 string characters out of 6180182
+ 142123 words of memory out of 5000000
+ 7532 multiletter control sequences out of 15000+600000
+ 8195 words of font info for 29 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 42i,10n,43p,669b,3943s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,10n,43p,684b,3943s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (5 pages, 852109 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on report.pdf (5 pages, 912185 bytes).
 PDF statistics:
- 93 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 105 PDF objects out of 1000 (max. 8388607)
+ 39 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 131 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 202 words of extra memory for PDF output out of 10000 (max. 10000000)
 

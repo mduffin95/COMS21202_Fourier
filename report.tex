@@ -18,8 +18,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{np14842, md14816}
-\lhead{Nick Pearson, Matthew Duffin}
+\rhead{md14816}
+\lhead{Matthew Duffin}
 \cfoot{Page \thepage}
 
 \begin{document}
@@ -71,6 +71,8 @@ At this point I looked at the three images and tried to find regions where the i
 	\label{fig:features}
 \end{figure}
 You will notice that a lot of the features have a "hole" in the middle. This is because I wanted to exclude the DC component from the features. The DC component is the average brightness of the image. It does not give any information about direction. Therefore its inclusion would be likely to skew my results if a certain image were brigher than the others. 
+
+If you look at the 'squashed x' shaped feature you will notice that it very closely follows the shape of the average fourier space for the V images. I measured the angles on frequency domain average to ensure that the correct spectral region was selected.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[trim={0 1.5cm 3cm 1.5cm},clip,width=0.75\textwidth]{feature_matrix_leg.png}
@@ -78,7 +80,7 @@ You will notice that a lot of the features have a "hole" in the middle. This is 
 	\label{fig:feature_matrix}
 \end{figure}
 
-Next, I took the log of the magnitude spectrum, squared it to get the power and then summed up the region defined by the feature.
+Next, I took the log of the magnitude spectrum, squared it, and then summed up the region defined by the feature. I took the log in order to reduce the range of magnitudes. Before I took the log I would find certain images had certain regions that dwarfed the rest of the image (around the DC value). By taking the log, the importance of this region was reduced and the importance of the higher frequencies was increased. It is the higher frequencies that are useful in classifying characters. The squaring really doesn't have much of an effect. It spreads out the data slightly more and increases the inter-cluster distance, making the data slightly easier to interpret.
 
 In Figure ~\ref{fig:feature_matrix} I have plotted the features against each other to form a grid of plots. The features are numbered 0 to 4 downwards and 0 to 4 from left to right. There are a number of good candidates, such as (0,2) and (2,4) but I decided to take (0,4) forwards (the cross and the ring) because apart from one wayward point it separates the data into three well defined clusters. A more detailed plot of these two features can be seen in Figure ~\ref{fig:classifier_training}.
 
@@ -89,155 +91,110 @@ In Figure ~\ref{fig:feature_matrix} I have plotted the features against each oth
 \section{The Classifier}
 \subsection{Training The Classifier}
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{minipage}[b]{.5\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{training_plot_k1.png}
-\subcaption{K=1}\label{fig:1a}
+\subcaption{K=1}\label{fig:traina}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{training_plot_k2.png}
-\subcaption{K=2}\label{fig:1a}
+\subcaption{K=2}\label{fig:trainb}
 \end{minipage}
 \begin{minipage}[b]{.5\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{training_plot_k3.png}
-\subcaption{K=3}\label{fig:1b}
+\subcaption{K=3}\label{fig:trainc}
 \end{minipage}%
 \begin{minipage}[b]{.5\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{training_plot_k4.png}
-\subcaption{K=4}\label{fig:1b}
+\subcaption{K=4}\label{fig:traind}
 \end{minipage}
-\caption{K-Nearest Neighbour Classifiers with K=1..4}\label{fig:1}
+\caption{K-Nearest Neighbour Classifiers with K=1..4}\label{fig:train}
 \end{figure}
 
-%\begin{figure}[ht]
-%\centering
-%\begin{subfigure}[K=2]{%
-%	\includegraphics[]{training_plot_k2.png}
-%	\label{fig:train_k2}}
-%\quad
-%\begin{subfigure}[K=3]{%
-%	\includegraphics[]{training_plot_k2.png}
-%	\label{fig:train_k3}}
-%\quad
-%\begin{subfigure}[K=4]{%
-%	\includegraphics[]{training_plot_k2.png}
-%	\label{fig:train_k4}}
-%%
-%\caption{The K-Nearest Neighbour classifier with K=2. The training data has also been plotted.}
-%\label{fig:training_plots}
-%\end{figure}
-
-Figure ~\ref{fig:classifier_training} shows that the selection of features 0 and 4 was a good one. The K-Nearest Neighbours algorithm has produced a fairly well-defined decision boundary. Only one point sits right on the decision boundary between S and V. This is fine, as it shows we are avoiding over-fitting the model to the test data.
+Figure ~\ref{fig:train} shows that the selection of features 0 and 4 was a good one. On these enlarged plots we can clearly see that the inter cluster distance is high, which leads to well-defined decision boundaries. 
 
 I must also mention that the values supplied to the K-Nearest Neighbour  algorithm were normalised first by dividing each feature by the largest value. This had no effect on the classification but just made the scale easier to interpret.
 
-%During this stage we wanted to derive class labels for each data point. The first method  we used was the K-Means algorithm. At first we ran the algorithm until convergence to ensure that we did not recieve unusual results due to the random nature of initial centroid selection. As you can see from the graph, this worked very well, visually matching our expectations. The K-Means algorithm also returns the inertia. This is the sum of distances of data points to their closest centroid. For Nick's data the value is 163. Given there are 150 data points this means each point is on average roughly 1 unit from the closest centroid, which seems very good. 
+Using K=1 we can see that the one wayward point (one of the S images) massively affects the decision boundary. Opting to use K=1 for our classifier would likely lead to overfitting. 
+
+Looking at the plots showing K>1, you can see that this outlier has less and less of an effect on the decision boundary. At K=4 we see that the decision boundaries are farily straight and look similar to what we would expect from an algorithm such as Nearest-Centroid. 
+
+I chose to use the K=4 classifier due to the reduced influence of the one outlier in the S group. This means there should be a lower chance of overfitting the model to the test data. If a point in my training data were to fall in a similar position, its classification would be viewed with suspicion due to its proximity to the decision boundary. 
 
 \subsection{Testing The Classifier}
+
+In order to test my classifier I produced some images of my own. As well as keeping the same dimensions as the training data images, I tried to match the thickness of the original characters as closely as possible. This is because a different thickness would give a different rate of change of intensity, thus leading to a 'peak' or 'bright spot' in a different region of the frequency domain. 
+
+\begin{figure}[!h]
+\centering
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/S1.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/S2.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/S3.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/S4.png}
+	\end{minipage}
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/T1.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/T2.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/T3.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/T4.png}
+	\end{minipage}
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/V1.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/V2.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/V3.png}
+	\end{minipage}	
+	\begin{minipage}[b]{0.3\textwidth}
+		\includegraphics[width=0.3\textwidth]{test/V4.png}
+	\end{minipage}	
+	\caption{Characters produced by myself to test my classifier.}
+	\label{fig:test_characters}
+\end{figure}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[trim={0 0 0 1cm},clip,width=0.75\textwidth]{test_plot.png}
-	\caption{The K-Nearest Neighbour classifier with K=3. The test data has also been plotted.}
+	\caption{The test data plotted on the The K-Nearest Neighbour classifier with K=4.}
 	\label{fig:classifier_test}
 \end{figure}
 
-\section{Nearest-Centroid Classification}
-The next stage of our analysis was to start classifying new data. We started by using the centroids that we found using K-Means as a simple nearest-neighbour classifier. You can see the results in Figures ~\ref{fig:nearest_matt} and ~\ref{fig:nearest_nick}. The crosses represent the test data. As our features had high inter-cluster distance the nearest neighbour produced a fairly good assignment of data points. However, we could not test that it was getting the right result every time as we did not know which cluster each test point was \textit{supposed} to belong to.
+If you look at Figure ~\ref{fig:classifier_test} you can see that all of the test images have been accurately classified. However, the S images have lower feature 4 (ring) values than the training data did. All of the S data points are very close to the decision boundary. This means you would have low confidence in the classification if you did not know which class the data was drawn from, as we do currently in this testing situation. 
 
-%\begin{figure}[ht]
-%\centering
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={7cm 0 2cm 0},clip,width=1.1\textwidth]{nearest_matt.pdf}
-%	\caption{Matt's data.}
-%	\label{fig:nearest_matt}
-%\end{minipage}
-%%\quad
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={7cm 0 2cm 0},clip,width=1.1\textwidth]{nearest_nick.pdf}
-%	\caption{Nick's data.}
-%	\label{fig:nearest_nick}
-%\end{minipage}
-%\end{figure}
+Overall I would call this a successful classifier. The only slight issue is the low feature 4 values and high feature 0 values of most of the data points in the S data set. This could be due to the fact that I was using a mouse and trackpad to produce the test images. Writing on paper or a pen tablet, one would be able to produce smoother lines. The 'blocky' nature of my drawing would account for the high feature 0 values, which shows the presence of horizontal and vertical frquencies. 
 
-% do you have any more to say here
-%GRAPH HERE
+\section{Classification Of 'A' And 'B' Characters}
 
+In this section I took the classifier that I developed and applied it two images: an 'A' character and a 'B' character. You can see the results in Figure ~\ref{fig:ab}.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[trim={0 0 0 1cm},clip,width=0.75\textwidth]{ab.png}
+	\caption{The classifier applied to images of the characters 'A' and 'B'.}
+	\label{fig:ab}
+\end{figure}
 
-\section{Maximum-Likelihood Classification}
-Next we used a different classification method: maximum-likelihood classification (with each class modelled as being drawn from a 2-D Normal Distribution). This method has certain advantages over nearest-neighbour classification. In ML classification we need to estimate mean vectors as well as full covariance matrices for each class. This may result in a non-linear decision boundary if the covariance matrices are not the same across classes. \nocite{ml_wiki} \nocite{mvn_wiki}
+The results surprised me. The character A was classified as an S, even though it is comprised of two long diagonal lines and a vertical. I expected it to be classified as a V. I suspect that the presence of both horizontal and diagonal lines 'filled up' the ring feature enough to push it up above the decision boundary into the S region. 
 
-Our first task was to plot contours around each cluster such that 95\% of the probability mass was inside the contour. We did this by finding the points where the squared Mahalanobis distance from the mean was 6. The Mahalanobis distance is a multi-dimensional measurement of how many standard deviations a point is from the mean \cite{mal_wiki}.
+The letter B was classfied as expected. The curved lines are very similar to the letter S and it was classified as an S accordingly. 
 
-Next we plotted the decision boundaries. These allow us to classify future data as belonging to one of the three clusters. To generate these boundaries we found the points where the probabilities of belonging to cluster A's distribution and cluster B's distribution were equal.
-
-%\begin{figure}[ht]
-%\centering
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={6cm 0 2cm 0},clip,width=1.1\textwidth]{contour_matt.pdf}
-%	\caption{Matt's data.}
-%	\label{fig:minipage7}
-%\end{minipage}
-%%\quad
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={6cm 0 2cm 0},clip,width=1.1\textwidth]{contour_nick.pdf}
-%	\caption{Nick's data.}
-%	\label{fig:minipage8}
-%\end{minipage}
-%%\caption{The 15 test data points have been classified. They are shown by an 'x' and the training data by an 'o'.}
-%\end{figure}
-
-We then considered how you could change the maximum-likelihood classifier so that its decision boundaries were the same as the ones we found using the nearest-centroid method. We found that you can use the identity matrix as the covariance matrix for the two distributions instead of thier true covariances. This way there appears to be no correlation between the features within each cluster. Also, the two covariance matrices are identical. This creates a straight decision boundary that bisects the line between the two centroids.
-
-%\begin{figure}[ht]
-%\centering
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={7cm 0 2cm 0},clip,width=1.1\textwidth]{prior_matt.pdf}
-%	\caption{Matt's data.}
-%	\label{fig:prior_matt}
-%\end{minipage}
-%%\quad
-%\begin{minipage}[b]{0.45\linewidth}
-%	\includegraphics[trim={7cm 0 2cm 0},clip,width=1.1\textwidth]{prior_nick.pdf}
-%	\caption{Nick's data.}
-%	\label{fig:prior_nick}
-%\end{minipage}
-%\end{figure}
-
-We also experimented with adding a prior to one of the three classes. Figures ~\ref{fig:prior_matt} and ~\ref{fig:prior_nick} show how the decision boundaries change (dotted line) when one of the classes is twice as likely.
-
-\section{Discussion}
-In conclusion, we agreed that the decision boundaries we achieved would be sufficient to assign new data points to our clusters. The use of Maximum-Likelihood Classification would seem more accurate for deciding points which are near the decision boundary, as our clusters had different covariance values from one another. \\
-The data we were given demonstrates how much information you can gain without any prior knowledge of where data was sourced. If we had more knowledge we could have used a MAP estimation for a final stage allowing for better results. However, we found that even giving one class a prior of 2 times the rest did not move the decision boundaries very far. This indicates that only a strong prior would affect classification greatly.
-
-\section{Sources}
-\renewcommand{\refname}{\vspace{-2em}}
-\begin{thebibliography}{9}
-
-\bibitem{mal_wiki}
-  Mahalanobis Distance Wikipedia,
-  https://en.wikipedia.org/wiki/Mahalanobis\_distance,
-  Retrieved 11th March 2016.
-  
-\bibitem{ml_wiki}
-  Maximum Likelihood Wikipedia,
-  https://en.wikipedia.org/wiki/Maximum\_likelihood,
-  Retrieved 11th March 2016.
-  
-\bibitem{mvn_wiki}
-  Multivariate Normal Wikipedia,
-  https://en.wikipedia.org/wiki/Multivariate\_normal\_distribution,
-  Retrieved 11th March 2016.
-  
-\bibitem{km_wiki}
-  K-Means Wikipedia,
-  https://en.wikipedia.org/wiki/K-means\_clustering,
-  Retrieved 11th March 2016.
-
-\end{thebibliography}
 \end{document}
