@@ -57,12 +57,7 @@ def ring(r, t):
     return img
 
 if __name__=="__main__":
-    # a = generate_line(5, 50, 23)
-    # b = generate_line(5, 50, -23)
-    # c = np.logical_or(a, b)
-    a = line(5, 50, 23)
-    b = line(5, 50, -23)
-    c = np.logical_or(a, b).astype(np.uint8)
+    c = ring(60, 10)
     plt.figure()
     plt.imshow(c, cmap="Greys")
-    plt.show()
+    plt.savefig("ring.png")
