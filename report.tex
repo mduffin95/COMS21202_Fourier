@@ -184,7 +184,7 @@ Overall I would call this a successful classifier. The only slight issue is the 
 
 \section{Classification Of 'A' And 'B' Characters}
 
-In this section I took the classifier that I developed and applied it two images: an 'A' character and a 'B' character. You can see the results in Figure ~\ref{fig:ab}.
+In this section I took the classifier that I developed and applied it to two images: an 'A' character and a 'B' character. You can see the results in Figure ~\ref{fig:ab}.
 
 \begin{figure}[h]
 	\centering
@@ -193,8 +193,29 @@ In this section I took the classifier that I developed and applied it two images
 	\label{fig:ab}
 \end{figure}
 
-The results surprised me. The character A was classified as an S, even though it is comprised of two long diagonal lines and a vertical. I expected it to be classified as a V. I suspect that the presence of both horizontal and diagonal lines 'filled up' the ring feature enough to push it up above the decision boundary into the S region. 
+The results surprised me. The character A was classified as an S, even though it is comprised of two long diagonal lines and a horizontal line. Instead I expected it to be classified as a V. I suspect that the presence of both horizontal and diagonal lines 'filled up' the ring feature enough to push it up above the decision boundary into the S region. 
 
 The letter B was classfied as expected. The curved lines are very similar to the letter S and it was classified as an S accordingly. 
+
+\section{Maximum Likelihood Classifier}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[trim={0 0 0 1cm},clip,width=0.75\textwidth]{max_likelihood.png}
+	\caption{A Maximum Likelihood classifier, overlaid on the Nearest Neighbour classifier for comparison. There are three decision boundaries. The teal is betweeen S and T, the purple is between T and V and the brown is between V and S.}
+	\label{fig:ml}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[trim={0 0 0 1cm},clip,width=0.75\textwidth]{max_likelihood_test.png}
+	\caption{The same as Figure ~\ref{fig:ml} but showing the test data instead of the training data.}
+	\label{fig:ml_test}
+\end{figure}
+
+Here I have applied a maximum likelihood classifier to the dataset. I have modelled each group of characters as being generated from a 2D Normal Distribution. The decision boundary is at the locus of points where the probability of belonging to either of the distributions is equal. Either side of the line the probability of belonging to one of the distributions is greater.
+
+I have overlaid these new decision boundaries on top of the Nearest Neighbour decision boundaries. As you can see they differ greatly. The boundary between T and V is fairly similar but the other two are very different. This is due to the influence of the outlying point in the S dataset. This has caused a large variance and has shifted the mean away from the main group. The decision regions are hyperbolic because the covariance matrices of the distributions are not equal. This causes non-contiguous decision regions, as evidenced by the decision boundaries in the bottom left and top left. 
+
+Looking at Figure ~\ref{fig:ml_test} you can see that the classifier has mis-classified three of the four points in the S dataset. This is worse than the Nearest Neighbour classifier. However, the points are still close to the decision boundary, so this would cast doubt on the classification. With more test data we could more accurately compare the two classifiers. 
 
 \end{document}

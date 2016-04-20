@@ -6,6 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 # from sklearn.preprocessing import normalize
 from matplotlib.colors import ListedColormap
 from features import *
+from likelihood import *
 
 s = re.compile("\w*/S\d+.GIF")
 t = re.compile("\w*/T\d+.GIF")
@@ -87,7 +88,7 @@ def plot_boundaries(X, X_target, T, T_target, n_neighbors):
 
     # plt.colorbar()
     #
-    plt.show()
+    # plt.show()
     # plt.savefig("test_plot.png")
 
 def get_all_features(paths):
@@ -147,8 +148,8 @@ if __name__=="__main__":
     # plotmatrix( X_normed, X_targets )
     X_normed = X_normed[:, [0,4]]
 
-    # paths = glob.glob('test/*.GIF')
-    paths = ["characters/ab/A1.GIF", "characters/ab/B1.GIF"]
+    paths = glob.glob('test/*.GIF')
+    # paths = ["characters/ab/A1.GIF", "characters/ab/B1.GIF"]
     T=get_all_features(paths)
     T_normed = T / X.max(axis=0)
     T_normed = T_normed[:, [0,4]]
@@ -158,3 +159,5 @@ if __name__=="__main__":
 
     # print(X_normed)
     plot_boundaries(X_normed, X_targets, T_normed, T_targets, n)
+    max_likelihood(X_normed, X_targets, 3)
+    plt.show()
